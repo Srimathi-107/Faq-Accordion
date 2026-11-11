@@ -1,349 +1,379 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>FAQ Accordion</title>
-
+    <title>Advanced FAQ Accordion</title>
     <link
-        href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
-        rel="stylesheet"
-    >
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #f5f3ff, #eef2ff, #f8fafc);
+        color: #1e293b;
+      }
+
+      /* Header */
+      header {
+        width: 100%;
+        padding: 25px 20px;
+        text-align: center;
+        background: linear-gradient(120deg, #4f46e5, #7c3aed);
+        color: white;
+        box-shadow: 0 5px 25px rgba(79, 70, 229, 0.2);
+      }
+
+      header h1 {
+        font-size: clamp(25px, 4vw, 34px);
+        font-weight: 800;
+        letter-spacing: 1px;
+      }
+
+      header p {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #e0e7ff;
+      }
+
+      /* Main Section */
+      main {
+        width: 100%;
+        min-height: calc(100vh - 100px);
+        padding: 55px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .intro {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .intro h2 {
+        font-size: clamp(24px, 4vw, 32px);
+        color: #312e81;
+        margin-bottom: 10px;
+      }
+
+      .intro p {
+        color: #64748b;
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      /* Accordion Container */
+      #par {
+        width: 100%;
+        max-width: 700px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid #e0e7ff;
+        border-radius: 22px;
+        box-shadow: 0 15px 45px rgba(49, 46, 129, 0.08);
+      }
+
+      /* Each FAQ */
+      .faq-item {
+        width: 100%;
+        padding: 20px 22px;
+        border: 1px solid #e2e8f0;
+        border-radius: 15px;
+        background: white;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .faq-item:hover {
+        border-color: #a5b4fc;
+        box-shadow: 0 5px 18px rgba(99, 102, 241, 0.08);
+      }
+
+      .question {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 650;
+        color: #334155;
+      }
+
+      .question span:first-child {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .question .number {
+        width: 35px;
+        height: 35px;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        background: #eef2ff;
+        color: #4f46e5;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .question i {
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background: #f1f5f9;
+        color: #4f46e5;
+        font-size: 21px;
+        transition: 0.3s;
+      }
+
+      .question:hover i {
+        background: #4f46e5;
+        color: white;
+      }
+
+      /* Answers */
+      #oneans,
+      #twoans,
+      #threeans {
+        display: none;
+        padding: 17px 10px 3px 47px;
+        color: #64748b;
+        font-size: 15px;
+        line-height: 1.8;
+        border-top: 1px solid #f1f5f9;
+        margin-top: 15px;
+      }
+
+      .show {
+        display: block !important;
+        animation: reveal 0.3s ease;
+      }
+
+      @keyframes reveal {
+        from {
+          opacity: 0;
+          transform: translateY(-6px);
         }
 
-        body {
-            min-height: 100vh;
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f3ff, #eef2ff, #f8fafc);
-            color: #1e293b;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        /* Header */
-        header {
-            width: 100%;
-            padding: 25px 20px;
-            text-align: center;
-            background: linear-gradient(120deg, #4f46e5, #7c3aed);
-            color: white;
-            box-shadow: 0 5px 25px rgba(79, 70, 229, 0.2);
-        }
+      /* Footer */
+      .footer {
+        margin-top: 25px;
+        text-align: center;
+        font-size: 13px;
+        color: #94a3b8;
+      }
 
-        header h1 {
-            font-size: clamp(25px, 4vw, 34px);
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
+      .footer i {
+        color: #6366f1;
+        margin-right: 5px;
+      }
 
-        header p {
-            margin-top: 8px;
-            font-size: 14px;
-            color: #e0e7ff;
-        }
-
-        /* Main Section */
+      /* Responsive */
+      @media (max-width: 480px) {
         main {
-            width: 100%;
-            min-height: calc(100vh - 100px);
-            padding: 55px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+          padding: 35px 15px;
         }
 
-        .intro {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .intro h2 {
-            font-size: clamp(24px, 4vw, 32px);
-            color: #312e81;
-            margin-bottom: 10px;
-        }
-
-        .intro p {
-            color: #64748b;
-            font-size: 15px;
-            line-height: 1.7;
-        }
-
-        /* Accordion Container */
         #par {
-            width: 100%;
-            max-width: 700px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            background: rgba(255, 255, 255, 0.75);
-            border: 1px solid #e0e7ff;
-            border-radius: 22px;
-            box-shadow: 0 15px 45px rgba(49, 46, 129, 0.08);
+          padding: 8px;
+          gap: 10px;
         }
 
-        /* Each FAQ */
         .faq-item {
-            width: 100%;
-            padding: 20px 22px;
-            border: 1px solid #e2e8f0;
-            border-radius: 15px;
-            background: white;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .faq-item:hover {
-            border-color: #a5b4fc;
-            box-shadow: 0 5px 18px rgba(99, 102, 241, 0.08);
+          padding: 16px 13px;
         }
 
         .question {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 650;
-            color: #334155;
+          font-size: 14px;
+          gap: 8px;
         }
 
         .question span:first-child {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+          gap: 9px;
         }
 
         .question .number {
-            width: 35px;
-            height: 35px;
-            flex-shrink: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
-            background: #eef2ff;
-            color: #4f46e5;
-            font-size: 14px;
-            font-weight: 700;
+          width: 30px;
+          height: 30px;
         }
 
         .question i {
-            width: 34px;
-            height: 34px;
-            flex-shrink: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            background: #f1f5f9;
-            color: #4f46e5;
-            font-size: 21px;
-            transition: 0.3s;
+          width: 30px;
+          height: 30px;
         }
 
-        .question:hover i {
-            background: #4f46e5;
-            color: white;
-        }
-
-        /* Answers */
         #oneans,
         #twoans,
         #threeans {
-            display: none;
-            padding: 17px 10px 3px 47px;
-            color: #64748b;
-            font-size: 15px;
-            line-height: 1.8;
-            border-top: 1px solid #f1f5f9;
-            margin-top: 15px;
+          padding-left: 39px;
+          font-size: 14px;
         }
-
-        .show {
-            display: block !important;
-            animation: reveal 0.3s ease;
-        }
-
-        @keyframes reveal {
-            from {
-                opacity: 0;
-                transform: translateY(-6px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 25px;
-            text-align: center;
-            font-size: 13px;
-            color: #94a3b8;
-        }
-
-        .footer i {
-            color: #6366f1;
-            margin-right: 5px;
-        }
-
-        @media (max-width: 480px) {
-            main {
-                padding: 35px 15px;
-            }
-
-            #par {
-                padding: 8px;
-                gap: 10px;
-            }
-
-            .faq-item {
-                padding: 16px 13px;
-            }
-
-            .question {
-                font-size: 14px;
-                gap: 8px;
-            }
-
-            .question span:first-child {
-                gap: 9px;
-            }
-
-            .question .number {
-                width: 30px;
-                height: 30px;
-            }
-
-            .question i {
-                width: 30px;
-                height: 30px;
-            }
-
-            #oneans,
-            #twoans,
-            #threeans {
-                padding-left: 39px;
-                font-size: 14px;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
+    <!-- Header -->
     <header>
-        <h1><i class="ri-question-answer-line"></i> FAQ ACCORDION</h1>
-        <p>Simple answers to your frequently asked questions</p>
+      <h1>
+        <i class="ri-question-answer-line"></i>
+        FAQ ACCORDION
+      </h1>
+
+      <p>Simple answers to your frequently asked questions</p>
     </header>
 
     <main>
+      <!-- Intro -->
+      <div class="intro">
+        <h2>Got Questions?</h2>
+        <p>Explore advanced concepts in modern web development.</p>
+      </div>
 
-        <div class="intro">
-            <h2>Got Questions?</h2>
-            <p>Explore the basics of web development below.</p>
+      <!-- FAQ Container -->
+      <div id="par">
+        <!-- Question 1 -->
+        <div class="faq-item">
+          <div id="one" class="question">
+            <span>
+              <span class="number">01</span>
+
+              How does React's reconciliation algorithm optimize DOM updates?
+            </span>
+
+            <i class="ri-add-large-line" id="icon1"></i>
+          </div>
+
+          <p id="oneans">
+            React's reconciliation algorithm compares the previous Virtual DOM
+            with the updated Virtual DOM using a process called diffing. It
+            identifies the necessary changes and updates only the affected parts
+            of the real DOM, improving rendering efficiency.
+          </p>
         </div>
 
-        <div id="par">
+        <!-- Question 2 -->
+        <div class="faq-item">
+          <div id="two" class="question">
+            <span>
+              <span class="number">02</span>
 
-            <div class="faq-item">
-                <div id="one" class="question">
-                    <span>
-                        <span class="number">01</span>
-                        What is the Virtual DOM in React?
-                    </span>
-                    <i class="ri-add-large-line" id="icon1"></i>
-                </div>
+              How does the JavaScript Event Loop handle microtasks and
+              macrotasks?
+            </span>
 
-                <p id="oneans">
-                    The Virtual DOM is a lightweight copy of the real DOM. React uses it to identify changes and update the necessary parts of the UI efficiently.
-                </p>
-            </div>
+            <i class="ri-add-large-line" id="icon2"></i>
+          </div>
 
-            <div class="faq-item">
-                <div id="two" class="question">
-                    <span>
-                        <span class="number">02</span>
-                        What is the difference between synchronous and asynchronous JavaScript?
-                    </span>
-                    <i class="ri-add-large-line" id="icon2"></i>
-                </div>
-
-                <p id="twoans">
-                    Synchronous JavaScript executes tasks one after another, while asynchronous JavaScript allows certain operations to complete later without blocking the execution of other code.
-                </p>
-            </div>
-
-            <div class="faq-item">
-                <div id="three" class="question">
-                    <span>
-                        <span class="number">03</span>
-                       What is the difference between authentication and authorization?
-                    </span>
-                    <i class="ri-add-large-line" id="icon3"></i>
-                </div>
-
-                <p id="threeans">
-                    Authentication verifies a user's identity, whereas authorization determines what resources or actions that authenticated user is permitted to access.
-                </p>
-            </div>
-
+          <p id="twoans">
+            The Event Loop manages asynchronous JavaScript execution. After the
+            call stack becomes empty, JavaScript processes microtasks such as
+            Promise callbacks before moving to the next macrotask, such as
+            setTimeout callbacks.
+          </p>
         </div>
 
-        <div class="footer">
-            <i class="ri-code-s-slash-line"></i>
-            Built with HTML, CSS & JavaScript
-        </div>
+        <!-- Question 3 -->
+        <div class="faq-item">
+          <div id="three" class="question">
+            <span>
+              <span class="number">03</span>
 
+              What is the difference between JWT access tokens and refresh
+              tokens?
+            </span>
+
+            <i class="ri-add-large-line" id="icon3"></i>
+          </div>
+
+          <p id="threeans">
+            Access tokens are short-lived credentials used to access protected
+            resources. Refresh tokens are longer-lived credentials used to
+            obtain new access tokens without requiring the user to log in again.
+            Refresh tokens must be stored and validated securely.
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <i class="ri-code-s-slash-line"></i>
+        Built with HTML, CSS & JavaScript
+      </div>
     </main>
 
     <script>
-        let obj = [
-            {
-                icon: document.getElementById("icon1"),
-                ans: document.getElementById("oneans")
-            },
-            {
-                icon: document.getElementById("icon2"),
-                ans: document.getElementById("twoans")
-            },
-            {
-                icon: document.getElementById("icon3"),
-                ans: document.getElementById("threeans")
+      // FAQ Elements
+      let obj = [
+        {
+          icon: document.getElementById("icon1"),
+          ans: document.getElementById("oneans"),
+        },
+
+        {
+          icon: document.getElementById("icon2"),
+          ans: document.getElementById("twoans"),
+        },
+
+        {
+          icon: document.getElementById("icon3"),
+          ans: document.getElementById("threeans"),
+        },
+      ];
+
+      // Accordion Functionality
+      obj.forEach((o, index) => {
+        o.icon.addEventListener("click", function () {
+          // Close other answers
+          obj.forEach((again, i) => {
+            if (i != index) {
+              again.ans.classList.remove("show");
+
+              again.icon.className = "ri-add-large-line";
             }
-        ];
+          });
 
-        obj.forEach((o, index) => {
-            o.icon.addEventListener("click", function () {
+          // Toggle current answer
+          o.ans.classList.toggle("show");
 
-                obj.forEach((again, i) => {
-                    if (i != index) {
-                        again.ans.classList.remove("show");
-                        again.icon.className = "ri-add-large-line";
-                    }
-                });
-
-                o.ans.classList.toggle("show");
-
-                if (o.ans.classList.contains("show")) {
-                    o.icon.className = "ri-subtract-line";
-                } else {
-                    o.icon.className = "ri-add-large-line";
-                }
-            });
+          // Change icon
+          if (o.ans.classList.contains("show")) {
+            o.icon.className = "ri-subtract-line";
+          } else {
+            o.icon.className = "ri-add-large-line";
+          }
         });
+      });
     </script>
-
-</body>
+  </body>
 </html>
